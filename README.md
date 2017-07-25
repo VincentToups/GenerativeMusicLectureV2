@@ -36,3 +36,33 @@ Today's Challenge: Can We Apply These Ideas to Music?
 
 ### Getting Set Up
 
+    git clone https://github.com/VincentToups/GenerativeMusicLectureV2
+    
+Or clone via the technique of your choice. 
+
+Then, 
+
+    cd GenerativeMusicLectureV2 
+    <open up index.html>
+    
+Then open up your developer's tools and type this into the console:
+
+    Score.play("A4 E4 C#1 A1 D2 E2 F#1 G#1 A>4");
+    
+What the heck! We're playing music!
+
+Quick Note on Notation!
+-----------------------
+
+For various historical reasons, we talk about notes starting with the
+note C:
+
+    Score.play("C D E F G A B C");
+    
+This is a C scale. Almost. That last C needs to be in the next octave,
+we indicate that like so:
+
+    Score.play("C D E F G A B C<");
+    
+
+   

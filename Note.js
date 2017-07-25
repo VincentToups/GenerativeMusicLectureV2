@@ -156,6 +156,7 @@
     };
 
     Note.prototype.getLatinName = function(){
+        if(!this.tone) return undefined;
         return this.tone.name+(this.tone.octave.toString(10));
     };
 

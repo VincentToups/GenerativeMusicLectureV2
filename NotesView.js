@@ -2,15 +2,21 @@
 
     function NotesView(canvas,notes,tempo){
         this.notes = notes;
+        this.ensureNotes();        
         this.canvas = canvas;
+        var w = this.canvas.width;
+        var h = this.canvas.height;
+        this.intendedWidth = w;
+        this.intendedHeight = h;
+        setHiDPICanvas(this.canvas, w, h);
         this.scoreCanvas = document.createElement("canvas");
-        setHiDPICanvas(this.scoreCanvas, this.canvas.width, this.canvas.height);
+        setHiDPICanvas(this.scoreCanvas, w, h);
         this.tempo = tempo;
         var lowestFreq = Infinity;
         var highestFreq = -Infinity;
-        this.totalSixteenths = notes[0].reduce(addDurations,0);
+        this.totalSixteenths = this.notes[0].reduce(addDurations,0);
         console.log("total sixteenths:", this.totalSixteenths);
-        this.totalBeats = 4*this.totalSixteenths/16;
+        this.totalBeats = this.totalSixteenths/4;
         console.log("Total Beats:",this.totalBeats);
         console.log("Length of Composition, Minutes: ", this.totalBeats/tempo);
         this.totalDurationMillis = (this.totalBeats/tempo)*60*1000;
@@ -28,8 +34,10 @@
 
         function addDurations(a,b){
             var f = noteToFrequency(b.getLatinName());
-            if(f<lowestFreq) lowestFreq=f;
-            if(f>highestFreq) highestFreq=f;
+            if(f){
+                if(f<lowestFreq) lowestFreq=f;
+                if(f>highestFreq) highestFreq=f;
+            }            
             return a+b.lengthInSixteenthNotes();
         };
         function loop(){
@@ -37,6 +45,51 @@
             requestAnimationFrame(loop);
         }
     }
+
+    NotesView.prototype.ensureNotes = function(){
+        this.notes = this.notes.map(function(voice){
+            if(typeof voice === "string"){
+                return Notes.fromString(voice);
+            }{
+                return voice;
+            }
+        });
+        return this;
+    };
+
+    NotesView.prototype.reset = function(notes){
+        this.notes = notes || this.notes;
+        this.ensureNotes();
+        var lowestFreq = Infinity;
+        var highestFreq = -Infinity;
+        var tempo = this.tempo;
+        this.totalSixteenths = this.notes[0].reduce(addDurations,0);
+        console.log("total sixteenths:", this.totalSixteenths);
+        this.totalBeats = 4*this.totalSixteenths/16;
+        console.log("Total Beats:",this.totalBeats);
+        console.log("Length of Composition, Minutes: ", this.totalBeats/tempo);
+        this.totalDurationMillis = (this.totalBeats/tempo)*60*1000;
+        this.lowestFreqency = lowestFreq-10;
+        this.highestFrequency = highestFreq+10;
+        this.drawScore();
+        this.drawCanvas();
+        console.log("Canvas Width",this.canvas.width,PIXEL_RATIO);
+
+        this.startTime = undefined;
+        this.currentTime = undefined;
+
+        this.startTime = undefined;
+        this.currentTime = undefined;
+
+        function addDurations(a,b){
+            var f = noteToFrequency(b.getLatinName());
+            if(f){
+                if(f<lowestFreq) lowestFreq=f;
+                if(f>highestFreq) highestFreq=f;
+            }
+            return a+b.lengthInSixteenthNotes();
+        };
+    };
 
     NotesView.prototype.start = function(){
         this.startTime = Date.now();
@@ -89,7 +142,7 @@
             if(note.isRest()) return;
             var f = noteToFrequency(note.getLatinName());
             var y = h*((f-fl)/(fh-fl));
-            var nw = note.lengthInSixteenthNotes()*pixelsPerSixteenth*3;
+            var nw = note.lengthInSixteenthNotes()*pixelsPerSixteenth;
             ctx.beginPath();
             ctx.moveTo(x0,y);
             ctx.lineTo(x0+nw,y);

@@ -10,7 +10,7 @@
         }
     };    
     function Score(voices,keySig,tempo){
-        this.tempo = tempo || 100;
+        this.tempo = tempo || 80;
         this.keySig = keySig || {};
         this.voices = voices.map(ensureNoteList);
     };

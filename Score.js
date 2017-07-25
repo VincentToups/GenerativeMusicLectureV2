@@ -10,7 +10,7 @@
         }
     };    
     function Score(voices,keySig,tempo){
-        this.tempo = tempo || 120;
+        this.tempo = tempo || 100;
         this.keySig = keySig || {};
         this.voices = voices.map(ensureNoteList);
     };
@@ -40,8 +40,8 @@
         master = T("delay", {time:"BPM__tempo__ L16".replace("__tempo__",tempoBPM), fb:0.65, mix:0.25}, master);
         
         var voiceDescriptions = [
-            "t__tempo__ v6 o4",
-            "t__tempo__ v14 o5"
+            "t__tempo__ v6 o3",
+            "t__tempo__ v8 o4"
         ].map(function(voice){
             return voice.replace("__tempo__",tempoBPM);
         });

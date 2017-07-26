@@ -495,7 +495,7 @@ like: "1234567812345678", which is all 16th notes. By using a smaller
 base, we can make longer notes more likely.)
 
 Once we have the number in base ten, we can add stuff to it, convert
-it back to base 3, and treat that as a new rhythm. Just like our note
+it back to base 4, and treat that as a new rhythm. Just like our note
 generator, we can select from a list of advancements to slowly evolve
 our rhythm.
 
@@ -547,4 +547,20 @@ Here is a final task which uses them to generate music:
 
 I've also thrown in a visualization (implemented in the repo) just for
 kicks. If we have time, we can go through it.
+
+Conclusion
+==========
+
+I hope I've demonstrated that Javascript can be a useful environment
+for generative art of all kinds. What we've covered here is just the
+beginning - modern browsers give us access to opengl style rendering
+(even calculation on the GPU!). This lets us do all sorts of
+interesting stuff.
+
+The lesson here should be: you've picked up all these skills at the
+Iron Yard: don't be afraid to apply them to weird, purely aesthetic,
+projects. If you do more with these tools than just practical work,
+you'll find that there is a lot more to programming than just getting
+a job (or getting a job done!).
+
 

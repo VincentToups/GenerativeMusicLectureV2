@@ -201,7 +201,7 @@ intuitively, but never explicitly until I read Terrence Deacon's
 "Incomplete Nature:" most of what we experience as meaningful derives
 its meaning from what it _doesn't do_ as opposed to what it does
 do. The problem with music this random is that it will do pretty much
-anything: any two notes an appear next to one another. 
+anything: any two notes can appear next to one another. 
 
 Plus, all the notes have the same length. This is boring. Let's fix
 that at least:
@@ -271,7 +271,7 @@ us what note to transition to.
     }
     
 For two notes this table has 49 entries. Its tedious to write down
-this these all by hand, but luckily we have a programming language:
+these all by hand, but luckily we have a programming language:
 
     /** given a bunch of arrays, generate all combinations of elements from each */
     function combinations(){
@@ -310,6 +310,15 @@ Let's experiment:
     combinations('A B C'.split(' '),'X Y Z'.split(' '),'Q R S'.split(' '))
     
     -> [["A","X","Q"],["B","X","Q"],["C","X","Q"],["A","Y","Q"],["B","Y","Q"],["C","Y","Q"],["A","Z","Q"],["B","Z","Q"],["C","Z","Q"],["A","X","R"],["B","X","R"],["C","X","R"],["A","Y","R"],["B","Y","R"],["C","Y","R"],["A","Z","R"],["B","Z","R"],["C","Z","R"],["A","X","S"],["B","X","S"],["C","X","S"],["A","Y","S"],["B","Y","S"],["C","Y","S"],["A","Z","S"],["B","Z","S"],["C","Z","S"]]
+    
+Now that we have a feel for it, how does it work? 
+
+Well, first of all, edge cases: if we have no arguments, there aren't
+any combinations, so we return the empty list. 
+
+Otherwise, our strategy is to build up the combinations, starting with
+the empty combination, and then creating all possible new combinations
+from the previous set. 
     
 So this generates all the combinations of the elements. If we want to
 build a generator that maps every pair of notes to a new note, we just
